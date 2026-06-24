@@ -1,43 +1,43 @@
-# Astro Starter Kit: Minimal
+# 369 Home Inspections
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Marketing site for 369 Home Inspections — a veteran-owned home inspection business.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+**🌐 Live site: <https://jc1198.github.io/369inspections/>**
 
-## 🚀 Project Structure
+Built with [Astro](https://astro.build) as a static site. No UI framework; design tokens drive a small set of reusable components.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Pages
+
+- **Home** — hero, trust bar, services, inspector challenge, FAQ
+- **Services** — full list of inspection offerings
+- **Home Systems** — overview grid linking to 9 system detail pages: Attic, Electrical, Exterior, Foundation, HVAC, Interior, Plumbing, Roof, Sewer. Each lists what we check, common defects, illustrations, and the relevant building-code requirements.
+
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/        # Nav, Footer, Button, ServiceCard, ArrowLink
+│   ├── home/          # home-page sections (Hero, TrustBar, Services, …)
+│   └── system/        # shared detail-page parts (SystemHeader, Checklist, MediaGrid, RegulationsList)
+├── data/              # per-system building-code regulations
+├── fonts/             # self-hosted Inter (400, 500)
+├── layouts/           # base page shell
+├── lib/               # withBase() URL helper for the GitHub Pages base path
+├── pages/             # routes (home, services, home-systems + detail pages)
+└── styles/            # design tokens + global styles
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Develop
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```sh
+npm install
+npm run dev        # http://localhost:4321/369inspections
+npm run build      # output to ./dist
+npm run preview    # preview the production build
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Deploy
 
-## 🧞 Commands
+Pushing to `main` triggers [the GitHub Actions workflow](.github/workflows/deploy.yml), which builds the site and publishes it to GitHub Pages automatically.
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The site is served from a subpath (`/369inspections`), set via `base` in [`astro.config.mjs`](astro.config.mjs). Internal links go through `withBase()` so they resolve correctly under that path.
