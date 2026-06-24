@@ -1,0 +1,48 @@
+---
+/**
+ * SystemHeader — the header band for a home-system detail page:
+ * "← All systems" back link, title, and intro lead.
+ */
+import { withBase } from '../../lib/url';
+
+interface Props {
+  title: string;
+  intro: string;
+}
+const { title, intro } = Astro.props;
+---
+
+<header class="sys-header">
+  <a class="sys-header__back" href={withBase('/home-systems')}>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    All systems
+  </a>
+  <h1 class="text-h1 sys-header__title">{title}</h1>
+  <p class="text-lead sys-header__intro">{intro}</p>
+</header>
+
+<style>
+  .sys-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+  }
+  .sys-header__back:hover {
+    color: var(--color-navy);
+  }
+  .sys-header__title {
+    margin-top: var(--space-3);
+  }
+  .sys-header__intro {
+    margin-top: var(--space-3);
+    max-width: 75ch;
+  }
+</style>

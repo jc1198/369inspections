@@ -1,0 +1,108 @@
+---
+/**
+ * RegulationsList — a flat list of code citations (topic + code + quote).
+ * Reference links are rendered inline where the phrase appears in the quote,
+ * otherwise appended as a parenthetical so every reference stays in the text.
+ */
+import type { Regulation } from '../../data/regulationTypes';
+
+interface Props {
+  heading: string;
+  source: string;
+  items: Regulation[];
+}
+const { heading, source, items } = Astro.props;
+
+function renderRegBody(reg: Regulation): string {
+  let html = reg.body;
+  const trailing: string[] = [];
+  for (const link of reg.links ?? []) {
+    const anchor = `<a href="${link.href}" target="_blank" rel="noopener noreferrer">${link.text}</a>`;
+    if (html.includes(link.text)) {
+      html = html.replace(link.text, anchor);
+    } else {
+      trailing.push(anchor);
+    }
+  }
+  if (trailing.length) {
+    const refs = ` (${trailing.join(', ')})`;
+    html = html.endsWith('.') ? `${html.slice(0, -1)}${refs}.` : `${html}${refs}`;
+  }
+  return html;
+}
+---
+
+<section class="regs-section">
+  <h2 class="text-h2">{heading}</h2>
+  <p class="regs-section__source">{source}</p>
+  <ul class="regs">
+    {items.map((reg) => (
+      <li class="reg">
+        <p class="reg__head">
+          <span class="reg__title">{reg.title}</span>
+          <span class="reg__code">{reg.code}</span>
+        </p>
+        <p class="reg__body" set:html={renderRegBody(reg)}></p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .regs-section {
+    margin-top: var(--space-7);
+  }
+  .regs-section > :global(h2) {
+    margin-bottom: var(--space-4);
+  }
+  .regs-section__source {
+    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+  }
+  .regs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .reg {
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .reg__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .reg__title {
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-navy);
+  }
+  .reg__code {
+    padding: var(--space-1) var(--space-2);
+    background-color: var(--color-bg-subtle);
+    border-radius: 100px;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-meta);
+    line-height: var(--line-height-meta);
+    font-weight: var(--font-weight-medium);
+  }
+  .reg__body {
+    margin-top: var(--space-2);
+    max-width: 90ch;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+  }
+  .reg__body :global(a) {
+    color: var(--color-navy);
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

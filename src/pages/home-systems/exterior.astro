@@ -1,0 +1,56 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SystemHeader from '../../components/system/SystemHeader.astro';
+import Checklist from '../../components/system/Checklist.astro';
+import MediaGrid from '../../components/system/MediaGrid.astro';
+import RegulationsList from '../../components/system/RegulationsList.astro';
+import {
+  exteriorRegulations,
+  exteriorCodeSource,
+} from '../../data/exteriorRegulations';
+
+// DRAFT copy — review/replace.
+const whatWeCheck = [
+  'Deck framing, footings, ledger attachment, and guards',
+  'Siding type, fastening, and ground/surface clearances',
+  'Flashing at windows, doors, decks, and wall/roof intersections',
+  'Masonry veneer support, anchorage, and weep holes',
+  'Dryer exhaust termination and exterior wall penetrations',
+];
+
+// Placeholder counts — captions + real assets TBD.
+const defects: string[] = Array(4).fill('');
+const illustrations: string[] = Array(8).fill('');
+---
+
+<Layout title="Exterior — Home Systems — 369 Home Inspections">
+  <Nav />
+  <main>
+    <article class="detail">
+      <div class="container">
+        <SystemHeader
+          title="Exterior"
+          intro="A home's exterior is its first line of defense against water and weather — from siding and flashing to decks, soffits, and masonry. Here's what we inspect and the codes behind it."
+        />
+
+        <Checklist items={whatWeCheck} />
+        <MediaGrid heading="Common defects" variant="video" items={defects} />
+        <MediaGrid heading="Illustrations" variant="diagram" items={illustrations} />
+        <RegulationsList
+          heading="Building code requirements"
+          source={exteriorCodeSource}
+          items={exteriorRegulations}
+        />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .detail {
+    padding-block: var(--space-6) var(--space-7);
+  }
+</style>

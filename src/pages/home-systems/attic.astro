@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SystemHeader from '../../components/system/SystemHeader.astro';
+import Checklist from '../../components/system/Checklist.astro';
+import MediaGrid from '../../components/system/MediaGrid.astro';
+import RegulationsList from '../../components/system/RegulationsList.astro';
+import { atticRegulations, atticCodeSource } from '../../data/atticRegulations';
+
+const whatWeCheck = [
+  'Structural framing — rafters, collar ties, ridge connections, and bearing',
+  'Insulation levels and proper coverage for energy efficiency',
+  'Ventilation and baffles that prevent moisture buildup',
+  'Safe access, clearances, and passage to attic appliances',
+  'Signs of moisture intrusion, condensation, or mold',
+];
+
+// Common defects — each links to a short clip (video assets TBD).
+const defects = [
+  'Screws used where only nails should be',
+  'Nail penetration–sized holes (improper fastening)',
+  'Nail holes with signs of moisture intrusion',
+  'Sheathing nails missing the rafters',
+  'Gable end wall pulling away from attic framing',
+];
+
+// Illustration diagrams (image assets TBD).
+const illustrations = [
+  'Ice dams',
+  'Insulation depth',
+  'Insulated attic hatch',
+  'Appliance access',
+  'Attic insulation thickness',
+  'Mold growth conditions',
+  'Ridge vent baffles',
+  'Attic eave',
+  'Condensation (3D)',
+  'Condensation (2D)',
+  'Collar / rafter tie',
+  'Knee wall vent',
+];
+---
+
+<Layout title="Attic — Home Systems — 369 Home Inspections">
+  <Nav />
+  <main>
+    <article class="detail">
+      <div class="container">
+        <SystemHeader
+          title="Attic"
+          intro="The attic reveals how well a home is built and protected — from structural framing to insulation and ventilation. Problems here often signal bigger issues with moisture, energy loss, or roof support."
+        />
+
+        <Checklist items={whatWeCheck} />
+        <MediaGrid heading="Common defects" variant="video" items={defects} />
+        <MediaGrid heading="Illustrations" variant="diagram" items={illustrations} />
+        <RegulationsList
+          heading="Building code requirements"
+          source={atticCodeSource}
+          items={atticRegulations}
+        />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .detail {
+    padding-block: var(--space-6) var(--space-7);
+  }
+</style>

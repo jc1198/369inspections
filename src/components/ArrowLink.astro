@@ -1,0 +1,51 @@
+---
+/**
+ * ArrowLink — a flush-left text link with a trailing arrow that slides on hover.
+ * Used for "All services", "All FAQs", etc.
+ */
+import { withBase } from '../lib/url';
+
+interface Props {
+  href: string;
+  class?: string;
+}
+const { href, class: className } = Astro.props;
+---
+
+<a class:list={['arrow-link', className]} href={withBase(href)}>
+  <span><slot /></span>
+  <svg
+    class="arrow-link__icon"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+    <polyline points="12 5 19 12 12 19"></polyline>
+  </svg>
+</a>
+
+<style>
+  .arrow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-navy);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+  }
+  .arrow-link__icon {
+    transition: transform 0.2s ease;
+  }
+  .arrow-link:hover .arrow-link__icon {
+    transform: translateX(4px);
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SystemHeader from '../../components/system/SystemHeader.astro';
+import Checklist from '../../components/system/Checklist.astro';
+import MediaGrid from '../../components/system/MediaGrid.astro';
+import RegulationsList from '../../components/system/RegulationsList.astro';
+import { roofRegulations, roofCodeSource } from '../../data/roofRegulations';
+
+// DRAFT copy — review/replace.
+const whatWeCheck = [
+  'Roof covering type, slope, and fastening',
+  'Flashing at valleys, sidewalls, chimneys, and penetrations',
+  'Drip edges, underlayment, and ice barriers',
+  'Signs of leaks, wear, or damaged shingles',
+  'Vents and pipe penetrations',
+];
+
+// Placeholder counts — captions + real assets TBD.
+const defects: string[] = Array(4).fill('');
+const illustrations: string[] = Array(8).fill('');
+---
+
+<Layout title="Roof — Home Systems — 369 Home Inspections">
+  <Nav />
+  <main>
+    <article class="detail">
+      <div class="container">
+        <SystemHeader
+          title="Roof"
+          intro="The roof is the home's primary shield against water — its covering, flashing, and drainage details determine how well it keeps the structure dry. Here's what we inspect and the codes behind it."
+        />
+
+        <Checklist items={whatWeCheck} />
+        <MediaGrid heading="Common defects" variant="video" items={defects} />
+        <MediaGrid heading="Illustrations" variant="diagram" items={illustrations} />
+        <RegulationsList
+          heading="Building code requirements"
+          source={roofCodeSource}
+          items={roofRegulations}
+        />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .detail {
+    padding-block: var(--space-6) var(--space-7);
+  }
+</style>

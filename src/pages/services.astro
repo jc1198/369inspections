@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+
+const services = [
+  {
+    title: 'Home Inspection',
+    description:
+      "A comprehensive assessment of your home's structure, systems, and components. Our most thorough service.",
+    price: 'From $500 · 3 hours',
+    badge: 'Most thorough',
+    featured: true,
+  },
+  {
+    title: 'Electrical Inspection',
+    description:
+      "A detailed evaluation of your home's electrical systems, panels, wiring, and outlets.",
+    price: '$150 · 1.5 hours',
+  },
+  {
+    title: 'Plumbing Inspection',
+    description:
+      'A thorough check of pipes, fixtures, water heaters, and drainage systems throughout the home.',
+    price: '$150 · 1.5 hours',
+  },
+  {
+    title: 'Roof Inspection',
+    description:
+      "An assessment of your roof's condition, materials, and potential problem areas.",
+    price: '$150 · 2 hours',
+  },
+  {
+    title: 'Sewer Scope',
+    description:
+      'A camera inspection of your sewer line to identify blockages, damage, or root intrusion before they become costly problems.',
+    price: '$250 · 1.5 hours',
+  },
+];
+---
+
+<Layout title="Services — 369 Home Inspections">
+  <Nav />
+  <main>
+    <section class="services-page">
+      <div class="container">
+        <header class="services-page__head">
+          <h1 class="text-h1">Services</h1>
+          <p class="text-lead services-page__intro">
+            From full home inspections to targeted system checks, we give you a
+            clear picture of what you're buying — backed by over a decade of
+            hands-on construction experience.
+          </p>
+        </header>
+
+        <ul class="services-page__grid">
+          {services.map((service) => (
+            <li
+              class:list={[
+                'services-page__item',
+                { 'services-page__item--wide': service.featured },
+              ]}
+            >
+              <ServiceCard {...service} />
+            </li>
+          ))}
+        </ul>
+
+        <p class="services-page__note">
+          Not sure which inspection you need?{' '}
+          <a href="#book">Book a full home inspection</a> or{' '}
+          <a href="mailto:369inspects@gmail.com">reach out</a> and we'll help.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .services-page {
+    padding-block: var(--space-7);
+  }
+  .services-page__head {
+    max-width: 70ch;
+  }
+  .services-page__intro {
+    margin-top: var(--space-3);
+  }
+
+  .services-page__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* Home Inspection spans the full width as the lead offering */
+  .services-page__item--wide {
+    grid-column: 1 / -1;
+  }
+
+  .services-page__note {
+    margin-top: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lead);
+    line-height: var(--line-height-lead);
+  }
+  .services-page__note a {
+    color: var(--color-navy);
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 767.98px) {
+    .services-page__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

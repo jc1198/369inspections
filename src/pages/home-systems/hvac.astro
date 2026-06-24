@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SystemHeader from '../../components/system/SystemHeader.astro';
+import Checklist from '../../components/system/Checklist.astro';
+import MediaGrid from '../../components/system/MediaGrid.astro';
+import RegulationsList from '../../components/system/RegulationsList.astro';
+import { hvacRegulations, hvacCodeSource } from '../../data/hvacRegulations';
+
+// DRAFT copy — review/replace.
+const whatWeCheck = [
+  'Equipment access, clearances, and service space',
+  'Furnace installation — floor, wall, and room heaters',
+  'Refrigerant lines, charge, and insulation',
+  'Condensate drainage, pans, and safety shutoffs',
+  'Combustion air and outdoor equipment support',
+];
+
+// Placeholder counts — captions + real assets TBD.
+const defects: string[] = Array(4).fill('');
+const illustrations: string[] = Array(8).fill('');
+---
+
+<Layout title="HVAC — Home Systems — 369 Home Inspections">
+  <Nav />
+  <main>
+    <article class="detail">
+      <div class="container">
+        <SystemHeader
+          title="HVAC"
+          intro="Your home's heating and cooling systems keep it comfortable and safe — installation, clearances, refrigerant handling, and condensate drainage all matter. Here's what we inspect and the codes behind it."
+        />
+
+        <Checklist items={whatWeCheck} />
+        <MediaGrid heading="Common defects" variant="video" items={defects} />
+        <MediaGrid heading="Illustrations" variant="diagram" items={illustrations} />
+        <RegulationsList
+          heading="Building code requirements"
+          source={hvacCodeSource}
+          items={hvacRegulations}
+        />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .detail {
+    padding-block: var(--space-6) var(--space-7);
+  }
+</style>

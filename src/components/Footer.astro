@@ -1,0 +1,185 @@
+---
+/**
+ * Footer — site footer (Figma: Footer/Desktop 127:277, Footer/Mobile 127:278).
+ * Same content in both states; responsive via the single 768px breakpoint:
+ *   - Desktop (>=768px): four groups in a row (Brand, Explore, Contact, Follow).
+ *   - Mobile  (<768px):  the groups stacked in a column.
+ * Navy surface, so muted text/dividers use the on-navy tokens.
+ * Logo "369" and the social icons are placeholders pending real assets.
+ */
+import { withBase } from '../lib/url';
+
+const explore = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '#' },
+  { label: 'Services', href: '/services' },
+  { label: 'Home Systems', href: '/home-systems' },
+  { label: 'Inspector Challenge', href: '#' },
+];
+
+const contact = [
+  { label: '(773) 574-5209', href: 'tel:+17735745209' },
+  { label: '369inspects@gmail.com', href: 'mailto:369inspects@gmail.com' },
+];
+
+// Placeholder socials — swap href + real icon assets later.
+const socials = ['Facebook', 'Instagram', 'X', 'LinkedIn'];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__columns">
+    <!-- Brand -->
+    <div class="footer__brand">
+      <span class="footer__logo" aria-hidden="true">369</span>
+      <p class="footer__tagline">Veteran-owned home inspections</p>
+    </div>
+
+    <!-- Explore -->
+    <nav class="footer__group" aria-label="Footer">
+      <p class="footer__heading">Explore</p>
+      <ul>
+        {explore.map((link) => (
+          <li><a href={withBase(link.href)}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Contact -->
+    <div class="footer__group">
+      <p class="footer__heading">Contact</p>
+      <ul>
+        {contact.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Follow -->
+    <div class="footer__group">
+      <p class="footer__heading">Follow</p>
+      <ul class="footer__socials">
+        {socials.map((name) => (
+          <li>
+            <a href="#" aria-label={name}>
+              <span class="footer__social-icon" aria-hidden="true"></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>© {year} 369 Home Inspections LLC</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    /* desktop padding: 64 / 32 / 48 (top / bottom / inline) */
+    padding: var(--space-7) var(--space-6) var(--space-5);
+  }
+
+  .footer__columns {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-5);
+    width: 100%;
+  }
+
+  /* Brand */
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* matches asset; swap for real logo later */
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    color: var(--color-navy);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-meta);
+    line-height: 1;
+  }
+  .footer__tagline {
+    color: var(--color-navy-text-muted);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+  }
+
+  /* Link groups */
+  .footer__group ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .footer__heading {
+    margin-bottom: var(--space-2);
+    color: var(--color-navy-text-muted);
+    font-size: var(--font-size-meta);
+    line-height: var(--line-height-meta);
+    font-weight: var(--font-weight-medium);
+  }
+  .footer__group a {
+    color: var(--color-white);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    text-decoration: none;
+  }
+  .footer__group a:hover {
+    text-decoration: underline;
+  }
+
+  /* Socials — placeholder circles */
+  .footer__socials {
+    flex-direction: row !important;
+    gap: var(--space-3) !important;
+  }
+  .footer__social-icon {
+    display: block;
+    width: var(--space-4); /* 24px */
+    height: var(--space-4);
+    border-radius: 50%;
+    background-color: var(--color-navy-text-muted);
+  }
+
+  /* Bottom bar */
+  .footer__bottom {
+    width: 100%;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-navy-border);
+  }
+  .footer__bottom p {
+    color: var(--color-navy-text-muted);
+    font-size: var(--font-size-meta);
+    line-height: var(--line-height-meta);
+  }
+
+  /* Single breakpoint switch at 768px, consistent with the token system */
+  @media (max-width: 767.98px) {
+    .footer {
+      /* mobile padding: 48 / 32 / 24 */
+      padding: var(--space-6) var(--space-4) var(--space-5);
+    }
+    .footer__columns {
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+  }
+</style>

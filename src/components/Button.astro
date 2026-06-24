@@ -1,0 +1,131 @@
+---
+/**
+ * Button — design-system button.
+ * Variants: primary | secondary | ghost.  Sizes: default | large.
+ * Renders an <a> when `href` is set, otherwise a <button>.
+ * Hover and disabled are handled in CSS (no discrete state prop).
+ * Optional `icon-leading` / `icon-trailing` named slots; label goes in the
+ * default slot. All colors/spacing/type pull from design tokens.
+ */
+import { withBase } from '../lib/url';
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'default' | 'large';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'default',
+  href,
+  type = 'button',
+  disabled = false,
+  class: className,
+} = Astro.props;
+
+const classes = ['btn', `btn--${variant}`, `btn--${size}`, className]
+  .filter(Boolean)
+  .join(' ');
+
+const Tag = href && !disabled ? 'a' : 'button';
+---
+
+<Tag
+  class={classes}
+  href={Tag === 'a' && href ? withBase(href) : undefined}
+  type={Tag === 'button' ? type : undefined}
+  disabled={Tag === 'button' ? disabled : undefined}
+  aria-disabled={disabled ? 'true' : undefined}
+>
+  {Astro.slots.has('icon-leading') && (
+    <span class="btn__icon"><slot name="icon-leading" /></span>
+  )}
+  <span class="btn__label"><slot /></span>
+  {Astro.slots.has('icon-trailing') && (
+    <span class="btn__icon"><slot name="icon-trailing" /></span>
+  )}
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border: none;
+    border-radius: 8px; /* not tokenized */
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    /* label = UI label token: 14px / 1.4 / medium */
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Sizes */
+  .btn--default {
+    padding: var(--space-2) var(--space-4);
+  }
+  .btn--large {
+    padding: var(--space-3) var(--space-5);
+  }
+
+  /* Primary */
+  .btn--primary {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+  }
+  .btn--primary:hover {
+    background-color: var(--color-navy-hover);
+  }
+
+  /* Secondary */
+  .btn--secondary {
+    background-color: transparent;
+    color: var(--color-navy);
+    border: 1.5px solid var(--color-navy);
+  }
+  .btn--secondary:hover {
+    background-color: var(--color-bg-subtle);
+  }
+
+  /* Ghost */
+  .btn--ghost {
+    background-color: transparent;
+    color: var(--color-navy);
+  }
+  .btn--ghost:hover {
+    background-color: var(--color-bg-subtle);
+  }
+
+  /* Disabled — applies to <button disabled> and aria-disabled anchors */
+  .btn:disabled,
+  .btn[aria-disabled='true'] {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .btn--primary:disabled,
+  .btn--primary[aria-disabled='true'] {
+    background-color: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+  }
+  .btn--secondary:disabled,
+  .btn--secondary[aria-disabled='true'] {
+    border-color: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+  }
+  .btn--ghost:disabled,
+  .btn--ghost[aria-disabled='true'] {
+    color: var(--color-disabled-text);
+  }
+
+  .btn__icon {
+    display: inline-flex;
+    flex: none;
+  }
+</style>

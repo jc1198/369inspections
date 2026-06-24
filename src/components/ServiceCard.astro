@@ -1,0 +1,114 @@
+---
+/**
+ * ServiceCard — a single service offering (title, description, price, CTA).
+ * `featured` switches to the dark navy-tint surface with inverted contents.
+ * Fills its grid cell (height: 100%); placement/grid is owned by the page.
+ */
+import Button from './Button.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  price: string;
+  badge?: string;
+  featured?: boolean;
+  href?: string;
+}
+
+const {
+  title,
+  description,
+  price,
+  badge,
+  featured = false,
+  href = '#book',
+} = Astro.props;
+---
+
+<article class:list={['card', { 'card--featured': featured }]}>
+  {badge && <span class="card__badge">{badge}</span>}
+  <h3 class="text-h3 card__title">{title}</h3>
+  <p class="card__desc">{description}</p>
+  <p class="card__price">{price}</p>
+  <div class="card__action">
+    <Button variant="secondary" href={href}>Book now</Button>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    border-color: var(--color-navy);
+    box-shadow: 0 8px 24px rgba(26, 26, 46, 0.08);
+  }
+
+  /* Featured — dark surface with inverted contents */
+  .card--featured {
+    background-color: var(--color-navy-tint);
+    border-color: var(--color-navy-tint);
+    justify-content: center;
+  }
+  .card--featured:hover {
+    border-color: var(--color-navy-hover);
+  }
+  .card--featured .card__title,
+  .card--featured .card__price {
+    color: var(--color-white);
+  }
+  .card--featured .card__desc {
+    color: var(--color-navy-text-muted);
+  }
+  .card--featured .card__badge {
+    background-color: var(--color-white);
+    color: var(--color-navy);
+  }
+  .card--featured :global(.btn--secondary) {
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+  .card--featured :global(.btn--secondary:hover) {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .card__badge {
+    align-self: flex-start;
+    margin-bottom: var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    border-radius: 100px;
+    font-size: var(--font-size-meta);
+    line-height: var(--line-height-meta);
+    font-weight: var(--font-weight-medium);
+  }
+  .card__title {
+    color: var(--color-navy);
+  }
+  .card__desc {
+    margin-top: var(--space-2);
+    max-width: 48ch;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+  }
+  .card__price {
+    margin-top: var(--space-3);
+    color: var(--color-navy);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    font-weight: var(--font-weight-medium);
+  }
+  .card__action {
+    margin-top: var(--space-4);
+  }
+</style>

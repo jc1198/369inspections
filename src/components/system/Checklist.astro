@@ -1,0 +1,56 @@
+---
+/**
+ * Checklist — the "What we check" section for a system detail page:
+ * a heading and a bulleted list with navy bar markers.
+ */
+interface Props {
+  heading?: string;
+  items: string[];
+}
+const { heading = 'What we check', items } = Astro.props;
+---
+
+<section class="check-section">
+  <h2 class="text-h2">{heading}</h2>
+  <ul class="checklist">
+    {items.map((item) => (
+      <li class="checklist__item">
+        <span class="checklist__marker" aria-hidden="true"></span>
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .check-section {
+    margin-top: var(--space-7);
+  }
+  .check-section > :global(h2) {
+    margin-bottom: var(--space-4);
+  }
+  .checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .checklist__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    color: var(--color-navy);
+  }
+  .checklist__marker {
+    flex: none;
+    width: 6px;
+    height: 1.2em;
+    margin-top: 0.15em;
+    border-radius: 3px;
+    background-color: var(--color-navy);
+  }
+</style>

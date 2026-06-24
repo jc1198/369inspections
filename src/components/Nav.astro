@@ -1,0 +1,133 @@
+---
+/**
+ * Nav — site header.
+ * Responsive via a single CSS breakpoint at 768px (matches the token system):
+ *   - Desktop (>=768px): logo left, nav links, "Book now" primary button right.
+ *   - Mobile  (<768px):  logo left, hamburger icon right.
+ * All three groups are always in the DOM; CSS toggles visibility. The hamburger
+ * is a non-functional icon for now (no menu yet). Logo is a "369" text
+ * placeholder pending the real asset.
+ */
+import Button from './Button.astro';
+import { withBase } from '../lib/url';
+
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '#' },
+  { label: 'Services', href: '/services' },
+  { label: 'Home Systems', href: '/home-systems' },
+  { label: 'Inspector Challenge', href: '#' },
+];
+---
+
+<nav class="nav" aria-label="Primary">
+  <!-- Logo (placeholder) -->
+  <a class="nav__logo" href={withBase('/')} aria-label="369 Inspections home">369</a>
+
+  <!-- Desktop: nav links -->
+  <ul class="nav__links">
+    {links.map((link) => (
+      <li><a href={withBase(link.href)}>{link.label}</a></li>
+    ))}
+  </ul>
+
+  <!-- Desktop: primary CTA -->
+  <div class="nav__cta">
+    <Button variant="primary" href="#">Book now</Button>
+  </div>
+
+  <!-- Mobile: hamburger (icon only for now) -->
+  <button class="nav__hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    height: var(--space-7); /* 64px */
+    padding-inline: var(--page-margin);
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Logo placeholder — navy circle with "369" */
+  .nav__logo {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-6); /* 48px touch target; visually ~36px circle */
+    height: var(--space-6);
+    border-radius: 50%;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-meta); /* small placeholder; swap with asset */
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  /* Desktop nav links */
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nav__links a {
+    color: var(--color-text-muted);
+    /* UI-label size, regular weight (links aren't medium in the design) */
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    font-weight: var(--font-weight-regular);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav__links a:hover {
+    color: var(--color-navy);
+  }
+
+  .nav__cta {
+    flex: none;
+  }
+
+  /* Mobile hamburger — three token-colored bars */
+  .nav__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: var(--space-4); /* 24px */
+    height: 18px; /* off-grid per design */
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  .nav__hamburger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    border-radius: 1px;
+    background-color: var(--color-navy);
+  }
+
+  /* Single breakpoint switch at 768px, consistent with tokens */
+  @media (max-width: 767.98px) {
+    .nav__links,
+    .nav__cta {
+      display: none;
+    }
+    .nav__hamburger {
+      display: flex;
+    }
+  }
+</style>

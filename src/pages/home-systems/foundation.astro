@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SystemHeader from '../../components/system/SystemHeader.astro';
+import Checklist from '../../components/system/Checklist.astro';
+import MediaGrid from '../../components/system/MediaGrid.astro';
+import RegulationsList from '../../components/system/RegulationsList.astro';
+import {
+  foundationRegulations,
+  foundationCodeSource,
+} from '../../data/foundationRegulations';
+
+// DRAFT copy — review/replace.
+const whatWeCheck = [
+  'Footings — depth, size, and bearing on undisturbed soil',
+  'Foundation walls, reinforcement, and anchorage',
+  'Site drainage, grading, and frost protection',
+  'Cracks, settlement, and signs of movement',
+  'Crawl space, stem wall, and cripple wall conditions',
+];
+
+// Defect clips from the source (video assets TBD).
+const defects = ['Foundation cracks', 'Foundation cracks'];
+
+// Illustration placeholders — captions + assets TBD (source has none).
+const illustrations: string[] = Array(8).fill('');
+---
+
+<Layout title="Foundation — Home Systems — 369 Home Inspections">
+  <Nav />
+  <main>
+    <article class="detail">
+      <div class="container">
+        <SystemHeader
+          title="Foundation"
+          intro="The foundation carries the entire house — its footings, walls, and drainage determine whether the structure stays level, dry, and sound. Here's what we inspect and the codes behind it."
+        />
+
+        <Checklist items={whatWeCheck} />
+        <MediaGrid heading="Common defects" variant="video" items={defects} />
+        <MediaGrid heading="Illustrations" variant="diagram" items={illustrations} />
+        <RegulationsList
+          heading="Building code requirements"
+          source={foundationCodeSource}
+          items={foundationRegulations}
+        />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .detail {
+    padding-block: var(--space-6) var(--space-7);
+  }
+</style>

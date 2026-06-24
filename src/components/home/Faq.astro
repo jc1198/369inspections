@@ -1,0 +1,94 @@
+---
+/**
+ * Faq — frequently asked questions as a native <details> accordion.
+ * First item open by default. No JavaScript required.
+ */
+import ArrowLink from '../ArrowLink.astro';
+
+const faqs = [
+  {
+    q: 'How long does a home inspection take?',
+    a: 'A typical home inspection takes 3 to 6 hours depending on the size and condition of the property.',
+    open: true,
+  },
+  {
+    q: 'When will I receive my report?',
+    a: 'Your inspection report will be delivered within 2 days of the inspection.',
+  },
+  {
+    q: 'Why should I choose 369 Home Inspections?',
+    a: "We're a veteran-owned team with over 10 years of hands-on construction experience across electrical, HVAC, carpentry, and masonry. We go beyond the basics using advanced tools and technology to uncover issues others might miss — and we donate 5% of every inspection fee to Humanity Relief.",
+  },
+];
+---
+
+<section class="faq" id="faq">
+  <div class="container">
+    <h2 class="text-h1">Frequently asked questions</h2>
+
+    <div class="faq__list">
+      {faqs.map((faq) => (
+        <details class="faq__item" open={faq.open}>
+          <summary class="faq__q">
+            <span>{faq.q}</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <p class="faq__a">{faq.a}</p>
+        </details>
+      ))}
+    </div>
+
+    <div class="faq__more">
+      <ArrowLink href="#faq">All FAQs</ArrowLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding-block: var(--space-7);
+  }
+  .faq__list {
+    margin-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+  }
+  .faq__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+    cursor: pointer;
+    list-style: none;
+    color: var(--color-navy);
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
+    font-weight: var(--font-weight-medium);
+  }
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+  .faq__chevron {
+    flex: none;
+    color: var(--color-text-muted);
+    transition: transform 0.2s ease;
+  }
+  .faq__item[open] .faq__chevron {
+    transform: rotate(180deg);
+  }
+  .faq__a {
+    padding: 0 0 var(--space-4);
+    max-width: 80ch;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+  }
+  .faq__more {
+    margin-top: var(--space-5);
+  }
+</style>

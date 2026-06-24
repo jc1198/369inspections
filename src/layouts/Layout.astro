@@ -1,0 +1,45 @@
+---
+/**
+ * Base layout — the page shell.
+ * Provides the html/head/body structure, loads global styles + tokens, and
+ * preloads the primary Inter font. Page content is injected via <slot />.
+ * Nav and footer are intentionally not included yet — they'll be added as
+ * separate components and dropped in here later.
+ */
+import '../styles/global.css';
+import { withBase } from '../lib/url';
+// Bundled URL for the preload — Vite fingerprints it and applies the base path.
+import interRegular from '../fonts/Inter-Regular.woff2?url';
+
+interface Props {
+  /** Document title, rendered in <title>. */
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="icon" href={withBase('/favicon.ico')} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Preload the primary (body) font to cut first-paint text reflow. -->
+    <link
+      rel="preload"
+      href={interRegular}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

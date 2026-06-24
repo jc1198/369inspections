@@ -1,0 +1,163 @@
+---
+/**
+ * InspectorChallenge — feature band promoting the leaderboard game.
+ * Desktop: intro copy beside a navy leaderboard panel (faux data + CTA).
+ * Mobile: copy only, with an "Available on desktop" note (the game is
+ * desktop-only per the design).
+ */
+import Button from '../Button.astro';
+
+const leaderboard = [
+  { rank: 1, name: 'Marcus R.', score: 980, discount: '10% off' },
+  { rank: 2, name: 'Priya N.', score: 940, discount: '8% off' },
+  { rank: 3, name: 'Devon W.', score: 910, discount: '5% off' },
+];
+---
+
+<section class="challenge" id="challenge">
+  <div class="container challenge__inner">
+    <div class="challenge__copy">
+      <h2 class="text-h1">Home inspector challenge</h2>
+      <p class="text-lead challenge__lead">
+        Test your knowledge of home defects and maintenance in our Inspector
+        Challenge. The higher you score on the leaderboard, the bigger your
+        discount — top scorers earn 10% off their inspection.
+      </p>
+      <div class="challenge__cta">
+        <Button variant="primary" href="#challenge">Take the challenge</Button>
+      </div>
+      <p class="challenge__note">Available on desktop.</p>
+    </div>
+
+    <div class="challenge__panel" aria-hidden="true">
+      <div class="challenge__panel-head">
+        <span class="challenge__trophy">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 4h12v3a6 6 0 0 1-12 0V4Z"/>
+            <path d="M6 6H4a2 2 0 0 0 2 2m12-2h2a2 2 0 0 1-2 2"/>
+            <path d="M12 13v4m-3 4h6m-5 0a2 2 0 0 1 4 0"/>
+          </svg>
+        </span>
+        <span class="challenge__panel-title">This week's leaderboard</span>
+      </div>
+      <ul class="board">
+        {leaderboard.map((row) => (
+          <li class="board__row">
+            <span class="board__rank">{row.rank}</span>
+            <span class="board__name">{row.name}</span>
+            <span class="board__score">{row.score}</span>
+            <span class="board__discount">{row.discount}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .challenge {
+    padding-block: var(--space-7);
+  }
+  .challenge__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: center;
+  }
+  .challenge__lead {
+    margin-top: var(--space-3);
+    max-width: 52ch;
+  }
+  .challenge__cta {
+    margin-top: var(--space-5);
+  }
+  .challenge__note {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-meta);
+    line-height: var(--line-height-meta);
+    /* desktop has the live panel, so the note is mobile-only */
+    display: none;
+  }
+
+  /* Leaderboard panel */
+  .challenge__panel {
+    background-color: var(--color-navy);
+    border-radius: 20px;
+    padding: var(--space-5);
+    color: var(--color-white);
+  }
+  .challenge__panel-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-navy-border);
+  }
+  .challenge__trophy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-6);
+    height: var(--space-6);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .challenge__panel-title {
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-navy-text-muted);
+  }
+  .board {
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .board__row {
+    display: grid;
+    grid-template-columns: var(--space-4) 1fr auto auto;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  .board__rank {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-navy-text-muted);
+    font-size: var(--font-size-ui);
+  }
+  .board__name {
+    font-size: var(--font-size-ui);
+  }
+  .board__score {
+    font-size: var(--font-size-ui);
+    color: var(--color-navy-text-muted);
+  }
+  .board__discount {
+    font-size: var(--font-size-meta);
+    font-weight: var(--font-weight-medium);
+    background-color: var(--color-white);
+    color: var(--color-navy);
+    padding: var(--space-1) var(--space-2);
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 767.98px) {
+    .challenge__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .challenge__note {
+      display: block;
+    }
+    .challenge__panel {
+      display: none;
+    }
+  }
+</style>

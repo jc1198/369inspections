@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SystemHeader from '../../components/system/SystemHeader.astro';
+import Checklist from '../../components/system/Checklist.astro';
+import MediaGrid from '../../components/system/MediaGrid.astro';
+import RegulationsList from '../../components/system/RegulationsList.astro';
+import { sewerRegulations, sewerCodeSource } from '../../data/sewerRegulations';
+
+// DRAFT copy — review/replace.
+const whatWeCheck = [
+  'Drain, waste, and vent (DWV) piping materials',
+  'Pipe joints, connections, and watertightness',
+  'Cleanout placement and access',
+  'Fittings and changes of direction',
+  'Freeze protection of exposed piping',
+];
+
+// Placeholder counts — captions + real assets TBD.
+const defects: string[] = Array(4).fill('');
+const illustrations: string[] = Array(8).fill('');
+---
+
+<Layout title="Sewer — Home Systems — 369 Home Inspections">
+  <Nav />
+  <main>
+    <article class="detail">
+      <div class="container">
+        <SystemHeader
+          title="Sewer"
+          intro="The sewer and drainage system carries waste safely away from the home — proper piping, joints, and cleanouts keep it flowing and prevent backups. Here's what we inspect and the codes behind it."
+        />
+
+        <Checklist items={whatWeCheck} />
+        <MediaGrid heading="Common defects" variant="video" items={defects} />
+        <MediaGrid heading="Illustrations" variant="diagram" items={illustrations} />
+        <RegulationsList
+          heading="Building code requirements"
+          source={sewerCodeSource}
+          items={sewerRegulations}
+        />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .detail {
+    padding-block: var(--space-6) var(--space-7);
+  }
+</style>

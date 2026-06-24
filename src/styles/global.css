@@ -1,0 +1,142 @@
+/* =============================================================================
+   Global stylesheet
+   Imports design tokens, then applies them: font loading, a minimal reset,
+   base element defaults, and reusable typography utility classes.
+
+   Import this once in a shared layout (e.g. via `import '../styles/global.css'`)
+   so every page inherits the tokens and base styles.
+   ========================================================================== */
+
+@import './tokens.css';
+
+/* =============================================================================
+   Fonts — Inter, self-hosted from src/fonts (bundled by Vite so the URLs stay
+   correct under the site's base path). Self-hosting avoids a third-party
+   connection on the critical path. The 400 file is also preloaded in
+   Layout.astro. Until the fonts load, the system fallback in --font-sans renders.
+   ========================================================================== */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/Inter-Medium.woff2') format('woff2');
+}
+
+/* =============================================================================
+   Reset — minimal, modern.
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =============================================================================
+   Base — document defaults inherit from Body type.
+   ========================================================================== */
+body {
+  background-color: var(--color-white);
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* =============================================================================
+   Layout
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+/* =============================================================================
+   Typography utilities
+   Visual roles decoupled from HTML tags — apply to whichever element fits the
+   semantics. All sizes pull from tokens, so they scale at the breakpoint.
+   ========================================================================== */
+.text-display {
+  font-size: var(--font-size-display);
+  line-height: var(--line-height-display);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-lead {
+  font-size: var(--font-size-lead);
+  line-height: var(--line-height-lead);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
+
+.text-body {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  font-weight: var(--font-weight-regular);
+}
+
+.text-ui {
+  font-size: var(--font-size-ui);
+  line-height: var(--line-height-ui);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-meta {
+  font-size: var(--font-size-meta);
+  line-height: var(--line-height-meta);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}

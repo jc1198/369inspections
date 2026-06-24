@@ -1,0 +1,52 @@
+---
+/**
+ * Hero — opening band: headline, lead paragraph, primary + secondary CTAs.
+ */
+import Button from '../Button.astro';
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <h1 class="text-display hero__title">Your home, fully inspected</h1>
+    <p class="text-lead hero__lead">
+      Veteran-owned with 10+ years of real construction experience across
+      electrical, HVAC, carpentry, and masonry. We know how homes are built —
+      and where problems hide.
+    </p>
+    <div class="hero__actions">
+      <Button variant="primary" href="#book">Book now</Button>
+      <Button variant="secondary" href="#services">Our services</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-7) var(--space-6);
+  }
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero__title {
+    text-wrap: nowrap;
+  }
+  .hero__lead {
+    max-width: 65ch;
+    margin-top: var(--space-3);
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  @media (max-width: 767.98px) {
+    /* allow the headline to wrap on small screens (won't fit one line) */
+    .hero__title {
+      text-wrap: balance;
+    }
+  }
+</style>

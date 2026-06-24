@@ -1,0 +1,117 @@
+---
+/**
+ * MediaGrid — a captioned grid of media placeholders for a system page.
+ * `variant`: "video" (defect clips, 5:3, play button, 3-up) or
+ *            "diagram" (illustrations, 4:3, 4-up).
+ * `items` are captions; an empty string renders a caption-less tile.
+ * Images are placeholders — swap `.media-placeholder` for real assets later.
+ */
+interface Props {
+  heading: string;
+  variant: 'video' | 'diagram';
+  items: string[];
+}
+const { heading, variant, items } = Astro.props;
+---
+
+<section class="media-section">
+  <h2 class="text-h2">{heading}</h2>
+  <ul class:list={['media', `media--${variant}`]}>
+    {items.map((caption) => (
+      <li class="media__item">
+        <div class="media__thumb media-placeholder">
+          {variant === 'video' && (
+            <span class="media__play" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <polygon points="6 4 20 12 6 20 6 4"></polygon>
+              </svg>
+            </span>
+          )}
+        </div>
+        {caption && <p class="media__caption">{caption}</p>}
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .media-section {
+    margin-top: var(--space-7);
+  }
+  .media-section > :global(h2) {
+    margin-bottom: var(--space-4);
+  }
+
+  .media {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .media--video {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .media--diagram {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .media__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .media-placeholder {
+    background-color: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+  .media__thumb {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .media--video .media__thumb {
+    aspect-ratio: 5 / 3;
+  }
+  .media--diagram .media__thumb {
+    aspect-ratio: 4 / 3;
+  }
+
+  .media__play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-6);
+    height: var(--space-6);
+    border-radius: 50%;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding-left: 2px; /* optically center the triangle */
+  }
+
+  .media__caption {
+    color: var(--color-navy);
+  }
+  .media--video .media__caption {
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    font-weight: var(--font-weight-medium);
+  }
+  .media--diagram .media__caption {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-meta);
+    line-height: var(--line-height-meta);
+  }
+
+  @media (max-width: 767.98px) {
+    .media--video {
+      grid-template-columns: 1fr;
+    }
+    .media--diagram {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
