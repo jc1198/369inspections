@@ -96,6 +96,8 @@ const services = [
       /* bleed to screen edges, pad back so first/last card align to margin */
       margin-inline: calc(var(--page-margin) * -1);
       padding-inline: var(--page-margin);
+      /* keep snap from scrolling past the start padding */
+      scroll-padding-inline: var(--page-margin);
       -webkit-overflow-scrolling: touch;
     }
     .services__item {
